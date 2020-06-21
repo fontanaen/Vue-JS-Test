@@ -5,26 +5,31 @@ const url = 'http://localhost:3000/';
 class HTTP_services {
     // Get
     static getUsers() {
-        const pro = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             try {
-                const res = axios.get(url);
-                const data = res.data;
-                resolve (data);
+                (async () => {
+                    const res = await axios.get(url);
+                    const data = res.data;
+                    resolve(data);
+                })();
             } catch (err) {
                 reject(err);
             }
         });
-
-        return Promise.resolve(pro)
     }
 
     // Post
-    static logIn(id, password) {
-        return axios.post(url, {
-            id : id,
-            password : password
-        });
+    static logIn(email, password) {
+        axios
+            .post(url, {
+                email : email,
+                password : password
+            })
+            .then((response) => {
+                console.log(response);
+                return ["true", "sponse"];
+            });
     }
 }
 
-export default HTTP_services
+export default HTTP_services;
