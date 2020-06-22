@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Login />
+    <router-view name="navbar"></router-view>
+    <router-view name="body"></router-view>
   </div>
 </template>
 
 <script>
-import Login from './components/Login.vue'
+
+//import Navbar from './components/navbar';
+
 
 export default {
   name: 'App',
   components: {
-    Login
+    //Navbar
+  },
+  data() {
+    return {
+      navbar : true,
+      component : 'Login'
+    }
+  },
+  created() {    
+    if (this.component == 'Login') this.navbar = false;
+  },
+  methods : {
+    toogle(value) {
+      if(value) this.component = value;
+    }
+  },
+  computed: {
+    currentRouteName() {
+        return this.$route.name;
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

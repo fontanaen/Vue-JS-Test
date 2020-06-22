@@ -7,6 +7,7 @@ const cors = require('cors');
 var app = express();
 
 // Middleware
+app.use(session({secret: "Shh, its a secret!", resave: true, saveUninitialized: true}));
 app.use(bodyParser.json()); 
 app.use(cors());
 
