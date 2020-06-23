@@ -1,4 +1,4 @@
-# Application Vuejs / Nodejs
+# Application Vue.js / Node.js
 
 ## Installation 
 
