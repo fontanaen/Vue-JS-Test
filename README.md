@@ -4,10 +4,17 @@
 
 **Required**
 
-- Nodejs;
-- MongoDB database *(here with MongoDB compass)*;
-- Packet manager **npm**;
+- **Node.js**
+- MongoDB database
+```
+- Change url in server/routes/router.js
+- if you're using Atlas Mongodb, change createConnectionToDB() because you doesn't have to indicate the database. Database is include in your link in theorie.
+- There is the exported database, users collection (database.json) to import in you're mongodb app.
+- Customize app for you expected.
+```
 
+
+- Packet manager **npm**
 ```
 - npm install
 - npm run dev (server)
@@ -16,10 +23,8 @@
 
 ## Credits
 
-```
-Main developper/Graphist : Enzo FONTANA
-```
+Main developper/Graphist : **Enzo FONTANA**
 
-[Bootstrap-vue](https://bootstrap-vue.org/)
+[Bootstrap-vue](https://bootstrap-vue.org/) - Template
 
 
