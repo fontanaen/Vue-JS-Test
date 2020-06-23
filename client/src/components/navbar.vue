@@ -9,8 +9,8 @@
 
             <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-                <b-nav-item href="#"><router-link to="/Login">Link</router-link></b-nav-item>
-                <b-nav-item href="" >Disabled</b-nav-item>
+                <b-nav-item to="/">Home</b-nav-item>
+                <b-nav-item to="/Blog">Blog</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -20,17 +20,17 @@
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
                 </b-nav-form>
                 
-                <b-img src="avatar.png" rounded="circle" alt="Circle image" width="40%" style="margin-left:15px"></b-img>
                 
                 <b-nav-item-dropdown right v-if="islog">
+                    
                     <!-- Using 'button-content' slot -->
                     <template v-slot:button-content>
-                        <em>{{ `${user.lastname} ${user.firstname}` }}</em>
+                        <b-avatar :text="user.lastname[0].toUpperCase() + user.firstname[0].toUpperCase()"></b-avatar>
                     </template>
                     <b-dropdown-item href="#">Profile</b-dropdown-item>
                     <b-dropdown-item href="#" v-on:click="logout()">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
-                <b-nav-item v-else><router-link to="/Login">Sign in</router-link></b-nav-item>
+                <b-nav-item to="/Login" v-else>Sign in</b-nav-item>
             </b-navbar-nav>
             
             </b-collapse>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import HTTP_services from '../http_services'
+
 export default {
     name : "navbar",
     data() {
@@ -52,9 +54,8 @@ export default {
         else this.islog = false
     },
     methods : {
-        logout() {
-            this.$session.destroy();
-            this.$router.push('/Login');
+        async logout() {
+            await HTTP_services.logOut(this.$router, this.$session);
         }
     }
 }

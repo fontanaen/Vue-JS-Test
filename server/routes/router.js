@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 // Post routes
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     console.log(req.body.email, req.body.password);
     const data = await createConnectionToDB('users');
     const myuser = await data.find({email : req.body.email, password : req.body.password}).toArray();
@@ -28,6 +28,16 @@ router.post('/', async (req, res) => {
     } else {
         res.status(201).send(false);
     }
+});
+
+router.post('/logout', async (req, res) => {
+    try {
+        await req.session.destroy()
+        res.status(201).send('disconnected');
+    } catch (err) {
+        res.status(501).send(err.message);
+    }
+    
 });
 
 router.post('/CreateAccount', async (req, res) => {

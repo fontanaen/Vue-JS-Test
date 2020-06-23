@@ -23,11 +23,30 @@ class HTTP_services {
         return new Promise((resolve, reject) => {
             try {
                 (async () => {
-                    const res = await axios.post(url, {email : email, password : password});
+                    const res = await axios.post(`${url}login`, {email : email, password : password});
                     if (res.data) {
                         session.start()
                         session.set('user', res.data);
                         router.push('/');
+                    } else {
+                        resolve(res.data);
+                    }
+                })();
+            } catch (err) {
+                reject(err);
+            }
+        });
+        
+    }
+
+    static logOut(router, session) {
+        return new Promise((resolve, reject) => {
+            try {
+                (async () => {
+                    const res = await axios.post(`${url}logout`);
+                    if (res.data == 'disconnected') {
+                        session.destroy();
+                        router.push('/Login');
                     } else {
                         resolve(res.data);
                     }
