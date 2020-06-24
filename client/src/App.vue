@@ -6,34 +6,8 @@
 </template>
 
 <script>
-
-//import Navbar from './components/navbar';
-
-
 export default {
-  name: 'App',
-  components: {
-    //Navbar
-  },
-  data() {
-    return {
-      navbar : true,
-      component : 'Login'
-    }
-  },
-  created() {    
-    if (this.component == 'Login') this.navbar = false;
-  },
-  methods : {
-    toogle(value) {
-      if(value) this.component = value;
-    }
-  },
-  computed: {
-    currentRouteName() {
-        return this.$route.name;
-    }
-  }
+  name: 'App'
 }
 </script>
 

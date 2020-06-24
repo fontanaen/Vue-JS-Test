@@ -19,12 +19,12 @@ router.get('/', async (req, res) => {
 router.post('/login', async (req, res) => {
     console.log(req.body.email, req.body.password);
     const data = await createConnectionToDB('users');
-    const myuser = await data.find({email : req.body.email, password : req.body.password}).toArray();
-    
-    if (myuser.length > 0) {
+    const myuser = await data.findOne({email : req.body.email, password : req.body.password});
+    console.log(myuser);
+    if (myuser) {
         req.session.islog = true;
-        req.session.user = myuser[0];
-        res.status(201).send(myuser[0]);
+        req.session.user = myuser;
+        res.status(201).send(myuser);
     } else {
         res.status(201).send(false);
     }
@@ -41,16 +41,14 @@ router.post('/logout', async (req, res) => {
 });
 
 router.post('/CreateAccount', async (req, res) => {
-    console.log(req.body.email, req.body.password);
     const data = await createConnectionToDB('users');
-    const myuser = await data.find({email : req.body.email, password : req.body.password}).toArray();
+    const myuser = await data.findOne({email : req.body.email});
     
-    if (myuser.length > 0) {
-        req.session.islog = true;
-        req.session.user = myuser[0];
-        res.status(201).send(myuser[0]);
-    } else {
+    if (myuser) {
         res.status(201).send(false);
+    } else {
+        await data.insertOne(req.body);
+        res.status(201).send(true);
     }
 });
 
@@ -61,7 +59,7 @@ async function createConnectionToDB(collection) {
         useUnifiedTopology: true
     });
 
-    return client.db('vue_express').collection(collection);
+    return client.db('vue_expresss').collection(collection);
 }
 
 module.exports = router;

@@ -22,10 +22,36 @@
 <script>
 export default {
     name : "Home",
+    data() {
+      return {
+        toastCount: 0
+      }
+    },
     beforeCreate: function () {
-    if (!this.$session.exists()) {
-      this.$router.push('/Login')
+      if (!this.$session.exists()) {
+        this.$router.push({ name : 'Login', params : { title : 'Access forgiven', type : 'danger', msg : 'You must be connected to check this page'}});
+      }
+    },
+    mounted() {
+      let title = this.$router.history.current.params.title;
+      let type = this.$router.history.current.params.type;
+      let message = this.$router.history.current.params.msg;
+      
+      this.makeToast(null, title, type, message);
+    },
+    methods: {
+      makeToast(append = false, title, type, message) {
+        if (message) {
+          this.toastCount++
+          this.$bvToast.toast(message, {
+            title: title,
+            variant : type,
+            solid : true,
+            autoHideDelay: 5000,
+            appendToast: append
+          })
+        }
+      }
     }
-  },
 }
 </script>

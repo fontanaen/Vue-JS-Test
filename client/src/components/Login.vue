@@ -25,7 +25,7 @@
     </b-row>
     <b-row class="mb-2 justify-content-md-center">
       <b-col cols="5">
-        <b-alert show variant="danger" v-if="msg">{{ msg }}</b-alert>
+        <b-alert show variant="danger" v-if="msg.length != 0">{{ msg }}</b-alert>
         <center><b-spinner variant="primary" v-if="loading" label="Spinning"></b-spinner></center>
       </b-col>
     </b-row>
@@ -41,22 +41,50 @@ export default {
     return {
       login : '',
       password : '',
-      msg : '',
+      msg : [],
       islog : Boolean,
-      loading : false
+      loading : false,
+      toastCount: 0
     }
+  },
+  mounted() {
+    if (this.$session.exists()) {
+        return this.$router.push({ name : 'Home', params : { title : 'Keep connected', type : 'success', msg : `${this.$session.get('user').firstname}, you were already connected!`}});
+      }
+    console.log(this.$router.history.current.params)
+    let title = this.$router.history.current.params.title;
+    let type = this.$router.history.current.params.type;
+    let message = this.$router.history.current.params.msg;
+    this.$router.history.current.params.msg = null;
+    this.makeToast(null, title, type, message);
   },
   methods: {
     async log() {
-      if (this.login.length > 0 && this.password.length > 0) {
+      if (this.login && this.password) {
         this.loading = true;
-        this.islog = await HTTP_services.logIn(this.login, this.password, this.$router, this.$session);
-        if (!this.islog) this.msg = 'Incorrect login or password.'
+        
+        await HTTP_services.logIn(this.login, this.password, this.$router, this.$session)
+                           .then((data) => { if (!data) this.msg = data })
+                           .catch((err) => { if(err) this.msg = err });
+        
         this.loading = false;
       } else {
         this.msg = 'Please enter login and password.';
       }
-    }
+    },
+
+    makeToast(append = false, title, type, message) {
+        if (message) {
+          this.toastCount++
+          this.$bvToast.toast(message, {
+            title: title,
+            variant : type,
+            solid : true,
+            autoHideDelay: 5000,
+            appendToast: append
+          })
+        }
+      }
   }
 }
 </script>

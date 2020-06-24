@@ -3,7 +3,7 @@
     
     <b-row class="justify-content-md-center" style="margin-top:5rem">  
       <b-col cols="5">
-        <b-jumbotron header-level="5" border-variant="dark" bg-variant="white" style="padding-top:0">
+        <b-jumbotron header-level="5" border-variant="dark" bg-variant="white" class="pb-3 pt-0">
           
           <template v-slot:header>
             <center><img alt="Vue logo" src="../assets/logo.png"></center>
@@ -28,7 +28,7 @@
           </b-form-row>
           
           <b-form-group label="Email" label-for="login">
-            <b-form-input type="email" id="login" v-model="login" placeholder="xyz@example.com" required />
+            <b-form-input type="email" id="login" v-model="email" placeholder="xyz@example.com" required />
           </b-form-group>
           
           <b-form-group label="Password" label-for="password">
@@ -36,7 +36,7 @@
           </b-form-group>
 
           <b-form-group label="Confirm password" label-for="confirm-password">
-            <b-form-input id="password" type="confirm-password" v-model="password" placeholder="*****" required/>
+            <b-form-input id="confirm_password" type="password" v-model="confirm_password" placeholder="*****" required/>
           </b-form-group>
 
           <b-button v-on:click="createAccount()" >Create account</b-button>
@@ -45,7 +45,7 @@
     </b-row>
     <b-row class="mb-2 justify-content-md-center">
       <b-col cols="5">
-        <b-alert show variant="danger" v-if="msg">{{ msg }}</b-alert>
+        <b-alert show variant="danger" v-for="items in msg" :key="items">{{ items }}</b-alert>
         <center><b-spinner variant="primary" v-if="loading" label="Spinning"></b-spinner></center>
       </b-col>
     </b-row>
@@ -63,18 +63,15 @@ export default {
       lastname : '',
       email : '',
       password : '',
-      msg : '',
+      confirm_password : '',
+      msg : [],
       loading : false
     }
   },
   methods: {
     async createAccount() {
-      if (this.firstname && this.lastname && this.login && this.password) {
-        await HTTP_services.createAccount();
-      } else {
-        this.msg = 'Please complete all fields.';
-      }
-      
+      const data = await HTTP_services.createAccount(this.firstname, this.lastname, this.email, this.password, this.confirm_password, this.$router);
+      if (data) this.msg = data;
     }
   }
 }
