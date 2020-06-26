@@ -11,7 +11,9 @@ app.use(session({secret: "Shh, its a secret!", resave: true, saveUninitialized: 
 app.use(bodyParser.json()); 
 app.use(cors());
 
-const router = require('./routes/router');
-app.use('/', router);
+const connect_routes = require('./routes/connection_module/router');
+const posts_routes = require('./routes/posts_module/router');
+app.use('/', connect_routes);
+app.use('/posts', posts_routes);
 
 app.listen(port, () => console.log(`The server is running on port ${port}`));

@@ -10,7 +10,7 @@
             <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
                 <b-nav-item to="/">Home</b-nav-item>
-                <b-nav-item to="/Blog">Blog</b-nav-item>
+                <b-nav-item to="/posts">Blog</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -25,7 +25,8 @@
                     
                     <!-- Using 'button-content' slot -->
                     <template v-slot:button-content>
-                        <b-avatar :text="user.lastname[0].toUpperCase() + user.firstname[0].toUpperCase()"></b-avatar>
+                        <b-avatar v-if="user" :text="user.lastname[0].toUpperCase() + user.firstname[0].toUpperCase() "></b-avatar>
+                        <b-avatar v-else variant="danger"></b-avatar>
                     </template>
                     <b-dropdown-item href="#">Profile</b-dropdown-item>
                     <b-dropdown-item href="#" v-on:click="logout()">Sign Out</b-dropdown-item>
@@ -46,7 +47,7 @@ export default {
     data() {
         return {
             user : this.$session.get('user'),
-            islog : false
+            islog : false,
         }
     },
     created() {
@@ -60,14 +61,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-a {
-    list-style-type: none;
-    color: rgba(255, 255, 255, 0.5);
-    text-decoration: none;
-}
-    a :hover {
-        color: rgba(255, 255, 255, 1);
-    }
-</style>

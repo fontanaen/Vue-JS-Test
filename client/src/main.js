@@ -7,9 +7,11 @@ import VueSession from 'vue-session';
 import App from './App.vue'
 import Navbar from './components/navbar';
 import Home from './components/home';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Login from './components/v-connection/Login';
+import SignUp from './components/v-connection/SignUp';
 import PageNotFound from './components/404';
+import Posts from './components/v-blog/posts';
+import Post from './components/v-blog/post';
 
 // Bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -45,6 +47,22 @@ const routes = [
         path : '/CreateAccount',
         name : 'SignUp',
         components : { body : SignUp }
+    },
+    {
+        path : '/posts',
+        name : 'Post',
+        components : { 
+          navbar : Navbar,
+          body : Posts
+         }
+    },
+    {
+        path : '/posts/:id',
+        name : 'Posts',
+        components : { 
+          navbar : Navbar,
+          body : Post
+         }
     },
     {
         path: "*", 

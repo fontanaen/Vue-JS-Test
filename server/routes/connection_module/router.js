@@ -9,18 +9,14 @@ const router = express.Router();
 const url = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false';
 
 // Get routes
-router.get('/', async (req, res) => {
-    const data = await createConnectionToDB('users');
-    console.log(data); 
-    res.send(await data.find({}).toArray());
-});
+
 
 // Post routes
 router.post('/login', async (req, res) => {
     console.log(req.body.email, req.body.password);
     const data = await createConnectionToDB('users');
     const myuser = await data.findOne({email : req.body.email, password : req.body.password});
-    console.log(myuser);
+    
     if (myuser) {
         req.session.islog = true;
         req.session.user = myuser;

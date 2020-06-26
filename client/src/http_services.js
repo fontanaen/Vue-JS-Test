@@ -4,18 +4,33 @@ const url = 'http://localhost:3000/';
 
 class HTTP_services {
     // Get
-    static getUsers() {
+
+    static getPosts() {
         return new Promise((resolve, reject) => {
             try {
                 (async () => {
-                    const res = await axios.get(url);
-                    const data = res.data;
-                    resolve(data);
+                    axios.get(`${url}posts`)
+                         .then((res) => resolve(res.data))
+                         .catch((err) => reject(err));
                 })();
             } catch (err) {
-                reject(err);
+                reject(err)
             }
-        });
+        })
+    }
+    
+    static getPostById(id) {
+        return new Promise((resolve, reject) => {
+            try {
+                (async () => {
+                    axios.get(`${url}posts/${id}`)
+                         .then((res) => resolve(res.data))
+                         .catch((err) => reject(err));
+                })();
+            } catch (err) {
+                reject(err)
+            }
+        })
     }
 
     // Post
@@ -25,13 +40,14 @@ class HTTP_services {
                 (async () => {
                     await axios.post(`${url}login`, {email : email, password : password})
                                .then((res) => {
-                                if (res.data) {
-                                    session.start()
-                                    session.set('user', res.data);
-                                    router.push({ name : 'Home', params : { title : 'Connected', type : 'success', msg : `Welcome ${res.data.firstname}!`}});
-                                } else {
-                                    resolve('Incorrect login or password.');
-                                }
+                                   console.log(res.data);
+                                    if (res.data) {
+                                        session.start()
+                                        session.set('user', res.data);
+                                        router.push({ name : 'Home', params : { title : 'Connected', type : 'success', msg : `Welcome ${res.data.firstname}!`}});
+                                    } else {
+                                        resolve('Incorrect login or password.');
+                                    }
                                })
                                .catch((err) => reject(err));
                 })();
@@ -69,28 +85,83 @@ class HTTP_services {
                     if (password !== confirm_password) err.push('Passwords do not match');
                     if (password.length < 6) err.push('Password must contain more than 6 characters');
                     if (err.length == 0) {
-                        const res = await axios.post(`${url}CreateAccount`, {
+                        await axios.post(`${url}CreateAccount`, {
                             firstname,
                             lastname,
                             email,
                             password
-                        });
-                        const data = res.data
-                        if (!data) {
-                            err.push('This email is already registered');
-                            resolve(err)
-                        } else {
-                            router.push('/Login');
-                        }
+                        }).then((res) => {
+                            if (!res.data) {
+                                err.push('This email is already registered');
+                                resolve(err)
+                            } else {
+                                router.push('/Login');
+                            }
+                        }).catch((err) => reject(err));
                     } else {
                         resolve(err);
                     }
                 })();   
             } catch (err) {
-                reject(err.message);
+                reject(err);
             }
         });   
     }
+
+    static addPosts(title, content, date) {
+        return new Promise((resolve, reject) => {
+            try {
+                (async () => {
+                    if (title && content) {
+                        axios.post(`${url}posts`, { title, content, date })
+                         .then((res) => resolve(res.data))
+                         .catch((err) => reject(err));
+                    } else {
+                        reject('Please complete all fields');
+                    }
+                })();
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    // Patch
+
+    static editPost(id, title, content) {
+        return new Promise((resolve, reject) => {
+            try {
+                (async () => {
+                    if (title && content) {
+                        axios.patch(`${url}posts/${id}`, { title, content })
+                         .then((res) => resolve(res.data))
+                         .catch((err) => reject(err));
+                    } else {
+                        reject('Please complete all fields.');
+                    }
+                })();
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    // Delete
+  
+    static deletePost(id) {
+        return new Promise((resolve, reject) => {
+            try {
+                (async () => {
+                    axios.delete(`${url}posts/${id}`)
+                        .then((res) => resolve(res.data))
+                        .catch((err) => reject(err));
+                })();
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+    
 }
 
 export default HTTP_services;
