@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
     console.log(req.body.email, req.body.password);
     const data = await createConnectionToDB('users');
     const myuser = await data.findOne({email : req.body.email, password : req.body.password});
-    
+    console.log(myuser)
     if (myuser) {
         req.session.islog = true;
         req.session.user = myuser;
@@ -54,9 +54,9 @@ async function createConnectionToDB(collection) {
     const client = await mongodb.MongoClient.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true
-    });
+    })
 
-    return client.db('vue_expresss').collection(collection);
+    return client.db('vue_express').collection(collection);
 }
 
 module.exports = router;
