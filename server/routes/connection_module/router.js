@@ -4,9 +4,9 @@ const mongodb = require('mongodb');
 const router = express.Router();
 
 // Mongo Atlas Url
-//const url = 'mongodb+srv://user_1:user_1@cluster0-yjikz.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true';
+const url = 'mongodb+srv://user_1:user_1@cluster0-yjikz.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true';
 
-const url = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false';
+//const url = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false';
 
 // Get routes
 
