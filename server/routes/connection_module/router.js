@@ -16,7 +16,9 @@ const url = 'mongodb+srv://user_1:user_1@cluster0-yjikz.mongodb.net/vue_express?
 router.post('/login', async (req, res) => {
     console.log(req.body.email, req.body.password);
     const data = await createConnectionToDB('users');
-    const myuser = await data.findOne({email : req.body.email, password : req.body.password});
+    const myuser = await data.findOne({email : req.body.email, password : req.body.password})
+        .then((data) => { return data })
+        .catch((err) => console.log(err));
     console.log(myuser)
     if (myuser) {
         req.session.islog = true;
@@ -55,7 +57,6 @@ async function createConnectionToDB(collection) {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-    .catch((err) => console.log(err));
 
     return client.db('vue_express').collection(collection);
 }
