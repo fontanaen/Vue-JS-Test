@@ -16,4 +16,10 @@ const posts_routes = require('./routes/posts_module/router');
 app.use('/', connect_routes);
 app.use('/posts', posts_routes);
 
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(__dirname + '/public/'));
+
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+}
+
 app.listen(port, () => console.log(`The server is running on port ${port}`));
