@@ -54,7 +54,7 @@ async function createConnectionToDB(collection) {
     const client = await mongodb.MongoClient.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true
-    })
+    });
 
     return client.db('vue_express').collection(collection);
 }
