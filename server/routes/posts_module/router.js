@@ -50,7 +50,7 @@ async function createConnectionToDB(collection) {
         useUnifiedTopology: true
     });
 
-    return client.db('vue_expresss').collection(collection);
+    return client.db('vue_express').collection(collection);
 }
 
 module.exports = router;
