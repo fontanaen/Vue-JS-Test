@@ -15,7 +15,9 @@ const url = 'mongodb+srv://user_1:user_1@cluster0-yjikz.mongodb.net/vue_express?
 // Post routes
 router.post('/login', async (req, res) => {
     console.log(req.body.email, req.body.password);
-    const data = await createConnectionToDB('users');
+    const data = await createConnectionToDB('users')
+        .then((data) => { return data })
+        .catch((err) => console.log(err));
     const myuser = await data.findOne({email : req.body.email, password : req.body.password})
         .then((data) => { return data })
         .catch((err) => console.log(err));
