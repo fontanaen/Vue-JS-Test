@@ -13,8 +13,8 @@
             It uses authentication to get all content, you can create an account or see the blog.
             </p>
             
-            <b-button variant="danger" to="/Logout" class="mr-2">Disconnect</b-button>
-            <b-button variant="success" v-on:click="logout()">See the blog</b-button>
+            <b-button variant="danger" v-on:click="logout()" class="mr-2">Disconnect</b-button>
+            <b-button variant="success" to="/posts">See the blog</b-button>
         </b-jumbotron>
     </b-container>
 </template>
