@@ -95,7 +95,7 @@ class HTTP_services {
                                 err.push('This email is already registered');
                                 resolve(err)
                             } else {
-                                router.push('/Login');
+                                router.push({ name : 'Login', params : { title : 'Registered', type : 'success', msg : `Your account has been created, you can sign in!`}});
                             }
                         }).catch((err) => reject(err));
                     } else {
