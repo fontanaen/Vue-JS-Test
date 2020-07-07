@@ -17,8 +17,8 @@
 
 - Run servers
 ```
-- npm run dev *(server)*
-- cd client => npm run serve *(client)*
+- npm run dev (server)
+- cd client => npm run serve (client)
 ```
 
 - Log into app or create account to check content*
