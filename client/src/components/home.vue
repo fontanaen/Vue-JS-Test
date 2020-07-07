@@ -14,13 +14,21 @@
             </p>
             
             <b-button variant="danger" to="/Logout" class="mr-2">Disconnect</b-button>
-            <b-button variant="success" to="/posts">See the blog</b-button>
+            <b-button variant="success" v-on:click="logout()">See the blog</b-button>
         </b-jumbotron>
     </b-container>
 </template>
 
 <script>
+
+import HTTP_services from '../http_services'
+
 export default {
-    name : "Home"
+    name : "Home",
+    methods : {
+        async logout() {
+            await HTTP_services.logOut(this.$router, this.$session);
+        }
+    }
 }
 </script>
