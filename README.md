@@ -1,25 +1,29 @@
 # Application Vue.js / Node.js
 
-## Installation 
-
-**Required**
+## Required
 
 - **Node.js**
-- MongoDB database
-```
-- Change url in server/routes/router.js
-- If you're using Atlas Mongodb, change createConnectionToDB() because you doesn't have to indicate the database. Database is include in your link in theorie.
-- There is the exported database, users collection (database.json) to import in you're mongodb app.
-- Customize app for what you expected.
-```
-
-
+- MongoDB database (mongodb Atlas) 
 - Packet manager **npm**
+
+## Installation 
+
+- Clone this [repository](https://github.com/fontanaen/Vue-JS-Test.git);
+- Install all dependencies :
 ```
-- npm install
-- npm run dev (server)
-- npm run serve (client)
+- npm install *(server modules)*
+- cd client => npm install *(vue.js modules)*
 ```
+
+- Run servers
+```
+- npm run dev *(server)*
+- cd client => npm run serve *(client)*
+```
+
+- Log into app or create account to check content*
+
+*\*You can link your own database by changing links in server files*
 
 ## Credits
 
